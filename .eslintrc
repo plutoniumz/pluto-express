@@ -1,0 +1,22 @@
+{
+    "env": {
+        "node": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "plugins": ["prettier"],
+    "extends": ["prettier", "eslint:recommended"],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "no-unused-vars": "warn",
+        "no-prototype-builtins": "warn",
+        "no-undef": "off",
+        "no-self-assign": "off",
+        "no-async-promise-executor": "off",
+        "no-empty": "off",
+        "semi": 0
+    }
+}

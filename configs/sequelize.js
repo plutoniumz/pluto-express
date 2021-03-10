@@ -1,0 +1,54 @@
+const mysql2 = require('mysql2')
+const Sequelize = require('sequelize')
+
+module.exports = {
+    models: {
+        Mode: 'master',
+        App: 'master',
+        Account: 'master',
+        Tenant: 'master',
+        Permission: 'master',
+    },
+    databases: {
+        master: {
+            user: 'root',
+            password: 'root',
+            host: 'localhost',
+            port: 3306,
+            database: 'pluto_core',
+            dialect: 'mysql',
+            dialectModule: mysql2,
+            force: true,
+            logging: false,
+        },
+        slave: {
+            user: 'root',
+            password: 'root',
+            host: 'localhost',
+            port: 3306,
+            database: 'pluto_application',
+            dialect: 'mysql',
+            dialectModule: mysql2,
+            force: false,
+            logging: false,
+        },
+    },
+    defaultAttributes: {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        createdAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE,
+    },
+    defineAssociations: () => {
+        Account.hasMany(Permission)
+        Permission.belongsTo(Account)
+        App.hasMany(Permission)
+        Permission.belongsTo(App)
+        Tenant.hasMany(Permission)
+        Permission.belongsTo(Tenant)
+        Permission.belongsTo(Mode)
+    },
+}

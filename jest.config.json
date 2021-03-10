@@ -1,0 +1,4 @@
+{
+    "clearMocks": true,
+    "setupFilesAfterEnv": ["./src/tests/unit_test/setup.js"]
+}
