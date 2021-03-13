@@ -4,7 +4,9 @@ module.exports = {
     attributes: {
         name: {
             type: DataTypes.STRING,
-            required: true,
+        },
+        code: {
+            type: DataTypes.STRING,
         },
     },
 }

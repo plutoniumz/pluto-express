@@ -5,8 +5,8 @@ module.exports = {
     models: {
         Mode: 'master',
         App: 'master',
-        Account: 'master',
-        Tenant: 'master',
+        Company: 'master',
+        Employee: 'master',
         Permission: 'master',
     },
     databases: {
@@ -42,13 +42,5 @@ module.exports = {
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE,
     },
-    defineAssociations: () => {
-        Account.hasMany(Permission)
-        Permission.belongsTo(Account)
-        App.hasMany(Permission)
-        Permission.belongsTo(App)
-        Tenant.hasMany(Permission)
-        Permission.belongsTo(Tenant)
-        Permission.belongsTo(Mode)
-    },
+    defineAssociations: () => {},
 }

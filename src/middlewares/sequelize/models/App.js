@@ -7,4 +7,14 @@ module.exports = {
             required: true,
         },
     },
+    options: {
+        customMethods: {
+            getAll: async () => {
+                return await App.findAll({
+                    attributes: ['id', 'name'],
+                    raw: true,
+                })
+            },
+        },
+    },
 }

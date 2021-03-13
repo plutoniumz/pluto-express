@@ -1,4 +1,5 @@
 const index = require('express-session')
+const Session = require('./Session')
 const MySQLStore = require('express-mysql-session')(index)
 
 class SessionMiddleware {
@@ -13,25 +14,25 @@ class SessionMiddleware {
         this.expiration = expiration
         this.sessionDbName = sessionDbName
         this.database = sequelizeDbs[this.sessionDbName]
-        this.defineGlobalSessionStore()
-        this.clearAllOldSessions()
     }
 
-    defineGlobalSessionStore() {
-        global.sessionStore = new MySQLStore({
+    defineGlobalSession() {
+        const store = new MySQLStore({
             ...this.configs,
             ...this.database,
         })
-    }
 
-    clearAllOldSessions() {
-        sessionStore.clear()
+        global.session = new Session(store)
     }
 
     init() {
+        this.defineGlobalSession()
+
+        session.clearAllSessions()
+
         app.use(
             index({
-                store: sessionStore,
+                store: session.store,
                 resave: false,
                 saveUninitialized: false,
                 secret: this.secret,

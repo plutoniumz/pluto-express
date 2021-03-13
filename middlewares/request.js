@@ -15,7 +15,7 @@ class RequestMiddleware {
                 req.isActive = !is_active ? true : is_active
 
                 // Add employee id to request body
-                req.body.employee_id = req.session.employee_id
+                req.body.employee_id = req.session.employee.id
             } catch (ex) {}
             next()
         })

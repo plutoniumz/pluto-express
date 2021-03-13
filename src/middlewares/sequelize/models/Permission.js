@@ -5,7 +5,7 @@ module.exports = {
         access: {
             type: DataTypes.TINYINT,
             required: true,
-            defaultValue: false,
+            defaultValue: true,
         },
     },
 }

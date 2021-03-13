@@ -20,7 +20,7 @@ requireUserFile = path => {
     } catch (ex) {
         if (ex.code === 'MODULE_NOT_FOUND') error(`${path} is not found`)
         else {
-            throw new ex()
+            throw new Error(ex)
         }
 
         process.exit()

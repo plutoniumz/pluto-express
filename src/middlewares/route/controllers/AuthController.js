@@ -2,73 +2,75 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
     login: async function (req, res) {
-        const { username, password } = req.body
-        const employee = await Account.findOne({
-            attributes: {
-                include: ['password'],
-            },
-            where: {
-                username: username,
-                is_active: 1,
-            },
-        })
+        if (!req.body.username || !req.body.password)
+            return res.forbidden('Missing "username" or "password"')
 
-        if (!employee && !(await bcrypt.compare(password, employee.password))) {
-            return res.unauthorized('Tài khoản không hợp lệ')
-        }
+        const employee = await Employee.getOneWithPasswordByUsername(
+            req.body.username,
+        )
 
-        req.session.employee_id = employee.id
+        if (!employee) return res.forbidden('Employee not found')
 
-        return res.sendMessage('Đăng nhập thành công')
+        const isSamePassword = Employee.checkPassword(
+            req.body.password,
+            employee.password,
+        )
+
+        if (!isSamePassword) return res.unauthorized('Invalid account')
+
+        session.setEmployee(req, employee)
+
+        return res.sendMessage('Login succeed')
     },
 
     logout: async function (req, res) {
-        if (req.session) req.session.destroy()
+        session.deleteEmployee(req)
 
-        return res.sendMessage('Đăng xuất thành công')
+        return res.sendMessage('Logout succeed')
     },
 
     changePassword: async function (req, res) {
-        const { old_password, new_password } = req.body
+        const employeeId = session.getEmployee(req).id
 
-        const employee = await Account.findOne({ id: req.session.employee.id })
+        const employee = await Employee.getOneWithPasswordById(employeeId)
 
-        if (!(await bcrypt.compare(old_password, employee.password))) {
-            // Avoid logout if wrong old password
+        const isSamePassword = Employee.checkPassword(
+            req.body.old_password,
+            employee.password,
+        )
+
+        if (!isSamePassword)
             return res.unauthorized('Mật khẩu cũ không trùng khớp')
-        }
 
-        await Account.updateOne({
-            id: req.session.employee.id,
-        }).set({
-            password: await bcrypt.hash(new_password, 10),
-        })
+        await Employee.updateOneById(
+            {
+                password: bcrypt.hashSync(req.body.new_password, 10),
+            },
+            employeeId,
+        )
 
         return res.sendMessage('Đổi mật khẩu thành công')
     },
 
     getPermission: async function (req, res) {
-        const permission = await Account.getPermission(req.session.employee_id)
+        const employeeId = session.getEmployee(req).id
+
+        const permission = await Employee.getPermission(employeeId)
 
         return res.ok(permission)
     },
 
     getAllPermissions: async function (req, res) {
-        const companies = await Company.findAll({
-            raw: true,
-            attributes: ['id', 'name'],
-        })
-        const apps = await App.findAll({
-            attributes: ['id', 'name'],
-        })
+        const allCompanies = await Company.getAll()
+        const allApps = await App.getAll()
 
-        apps.forEach(app => (app.mode = null))
+        allApps.forEach(app => (app.mode = null))
 
-        companies.forEach(company => {
-            company.apps = apps
+        allCompanies.forEach(company => {
+            company.apps = allApps
             company.access = false
         })
 
-        res.send(companies)
+        res.send(allCompanies)
     },
 }
