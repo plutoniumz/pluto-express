@@ -8,8 +8,8 @@ includeCLIBin() {
 makeCLIBinExample() {
   mkdir build/bin/example
   cp -rf configs build/bin/example/configs
+  cp -rf controllers build/bin/example/controllers
   cp -rf middlewares build/bin/example/middlewares
-  cp -rf mock_data build/bin/example/mock_data
   cp -rf models build/bin/example/models
   cp -rf policies build/bin/example/policies
   cp -rf responses build/bin/example/responses
