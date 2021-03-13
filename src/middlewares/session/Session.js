@@ -25,7 +25,7 @@ class Session {
     }
 
     hasEmployee(req) {
-        return !!req.session.employee
+        return !!(req.session && req.session.employee)
     }
 }
 
