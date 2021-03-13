@@ -15,6 +15,18 @@ module.exports = {
                     raw: true,
                 })
             },
+
+            getId: async name => {
+                const app = await App.findOne({
+                    attributes: ['id'],
+                    raw: true,
+                    where: {
+                        name: name,
+                    },
+                })
+
+                return app.id
+            },
         },
     },
 }
