@@ -69,7 +69,10 @@ class SequelizeMiddleware {
                 ...this.default_attributes,
                 ...attributes,
             },
-            options,
+            {
+                ...options,
+                schema: connection.config.database,
+            },
         )
     }
 
@@ -85,6 +88,9 @@ class SequelizeMiddleware {
                 ? this.requireDefaultModel(name)
                 : this.requireUserModel(name)
             const connection = this.connections[database]
+
+            // https://github.com/sequelize/sequelize/issues/3023
+            connection.dialect.supports.schemas = true
 
             this.registerModelGlobal(name, attributes, options, connection)
             this.addCustomMethodsToModel(options.customMethods, global[name])
@@ -126,11 +132,12 @@ class SequelizeMiddleware {
     }
 
     defineAssociations() {
-        Employee.hasMany(Permission)
-        Permission.belongsTo(Employee)
         App.hasMany(Permission)
-        Permission.belongsTo(App)
         Company.hasMany(Permission)
+        Employee.hasMany(Permission)
+        Mode.hasMany(Permission)
+        Permission.belongsTo(App)
+        Permission.belongsTo(Employee)
         Permission.belongsTo(Company)
         Permission.belongsTo(Mode)
     }

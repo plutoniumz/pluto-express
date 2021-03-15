@@ -22,7 +22,7 @@ module.exports = {
             type: 'boolean',
             defaultValue: true,
         },
-        ...utils.requireUserFile(userModelPath).attributes,
+        ...(utils.requireUserFile(userModelPath).attributes || {}),
     },
 
     options: {
@@ -157,5 +157,6 @@ module.exports = {
                 return allCompanies
             },
         },
+        ...(utils.requireUserFile(userModelPath).options || {}),
     },
 }

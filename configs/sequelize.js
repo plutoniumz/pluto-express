@@ -6,7 +6,7 @@ module.exports = {
         Mode: 'master',
         App: 'master',
         Company: 'master',
-        Employee: 'master',
+        Employee: 'slave',
         Permission: 'master',
     },
     databases: {
@@ -19,7 +19,7 @@ module.exports = {
             dialect: 'mysql',
             dialectModule: mysql2,
             force: true,
-            logging: false,
+            logging: true,
         },
         slave: {
             user: 'root',
@@ -29,8 +29,8 @@ module.exports = {
             database: 'pluto_application',
             dialect: 'mysql',
             dialectModule: mysql2,
-            force: false,
-            logging: false,
+            force: true,
+            logging: true,
         },
     },
     defaultAttributes: {

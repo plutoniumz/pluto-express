@@ -55,4 +55,7 @@ module.exports = {
             defaultValue: false,
         },
     },
+    options: {
+        tableName: 'staff',
+    },
 }
