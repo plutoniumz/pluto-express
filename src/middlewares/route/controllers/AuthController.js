@@ -44,7 +44,7 @@ module.exports = {
 
         await Employee.updateOneById(
             {
-                password: bcrypt.hashSync(req.body.new_password, 10),
+                password: Employee.hashPassword(req.body.new_password),
             },
             employeeId,
         )

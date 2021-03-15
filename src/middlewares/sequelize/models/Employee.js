@@ -34,13 +34,13 @@ module.exports = {
                 instances.forEach(instance => {
                     if (!instance.password) return
 
-                    instance.password = bcrypt.hashSync(instance.password, 10)
+                    instance.password = Employee.hashPassword(instance.password)
                 })
             },
             beforeCreate: instance => {
                 if (!instance.password) return
 
-                instance.password = bcrypt.hashSync(instance.password, 10)
+                instance.password = Employee.hashPassword(instance.password)
             },
         },
         customMethods: {
@@ -59,6 +59,8 @@ module.exports = {
                     },
                 })
             },
+
+            hashPassword: password => bcrypt.hashSync(password, 10),
 
             checkPassword: (firstPassword, secondPassword) => {
                 return bcrypt.compareSync(firstPassword, secondPassword)
