@@ -19,7 +19,7 @@ module.exports = {
             dialect: 'mysql',
             dialectModule: mysql2,
             force: true,
-            logging: true,
+            logging: false,
         },
         slave: {
             user: 'root',
@@ -30,7 +30,7 @@ module.exports = {
             dialect: 'mysql',
             dialectModule: mysql2,
             force: true,
-            logging: true,
+            logging: false,
         },
     },
     defaultAttributes: {

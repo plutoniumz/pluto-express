@@ -1,6 +1,6 @@
-const index = require('express-session')
 const Session = require('./Session')
-const MySQLStore = require('express-mysql-session')(index)
+const expressSession = require('express-session')
+const MySQLStore = require('express-mysql-session')(expressSession)
 
 class SessionMiddleware {
     constructor() {
@@ -17,10 +17,7 @@ class SessionMiddleware {
     }
 
     defineGlobalSession() {
-        const store = new MySQLStore({
-            ...this.configs,
-            ...this.database,
-        })
+        const store = new MySQLStore(this.database)
 
         global.session = new Session(store)
     }
@@ -31,7 +28,7 @@ class SessionMiddleware {
         session.clearAllSessions()
 
         app.use(
-            index({
+            expressSession({
                 store: session.store,
                 resave: false,
                 saveUninitialized: false,
