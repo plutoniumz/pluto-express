@@ -5,9 +5,9 @@ const TerserPlugin = require('terser-webpack-plugin')
 module.exports = {
     target: 'node',
     mode: 'production',
-    entry: ['./src/app.js'],
+    entry: ['./src/pluto-express.js'],
     output: {
-        filename: 'app.js',
+        filename: 'pluto-express.js',
         path: resolve(__dirname, './build'),
         libraryTarget: 'umd',
     },
