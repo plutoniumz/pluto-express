@@ -3,4 +3,5 @@ module.exports = {
     forbidden: require('./forbidden'),
     sendMessage: require('./sendMessage'),
     unauthorized: require('./unauthorized'),
+    sendErrMessage: require('./sendErrMessage'),
 }

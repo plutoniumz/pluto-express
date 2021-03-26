@@ -42,6 +42,11 @@ module.exports = {
 
                 instance.password = Employee.hashPassword(instance.password)
             },
+            beforeUpdate: instance => {
+                if (!instance.password) return
+
+                instance.password = Employee.hashPassword(instance.password)
+            },
         },
         customMethods: {
             /*getOne: async () => {
