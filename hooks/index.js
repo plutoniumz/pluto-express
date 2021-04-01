@@ -29,13 +29,9 @@
 
 module.exports = {
     cors: require('./cors'),
-    helmet: {},
     session: require('./session'),
-    'body-parser': {},
     requests: require('./requests'),
-    responses: {},
     policies: require('./policies'),
     routes: require('./routes'),
     sequelize: require('./sequelize'),
-    logger: {},
 }

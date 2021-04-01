@@ -1,6 +1,10 @@
 const { Hook } = require('../../src/pluto-express')
 
 class RequestHook extends Hook {
+    startOn() {
+        return 'after:logger'
+    }
+
     init() {
         app.use('*', (req, res, next) => {
             try {
