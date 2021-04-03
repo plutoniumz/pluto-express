@@ -1,5 +1,3 @@
-const bcrypt = require('bcryptjs')
-
 module.exports = {
     login: async function (req, res) {
         if (!req.body.username || !req.body.password)
@@ -20,7 +18,7 @@ module.exports = {
 
         session.setEmployee(req, employee)
 
-        return res.sendMessage('Login succeed')
+        return res.ok(session.getEmployee(req))
     },
 
     logout: async function (req, res) {

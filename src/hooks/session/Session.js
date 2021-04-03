@@ -17,6 +17,8 @@ class Session {
             req.session.employee.id = employee.id
             req.session.employee.is_admin = employee.is_admin
             req.session.employee.is_active = employee.is_active
+            req.session.employee.avatar = employee.avatar
+            req.session.employee.name = employee.name
         }
     }
 
