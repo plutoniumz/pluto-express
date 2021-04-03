@@ -7,6 +7,7 @@ const DEFAULT_HOOKS = [
     'helmet',
     'session',
     'body-parser',
+    'file-upload',
     'responses',
     'policies',
     'routes',
@@ -156,7 +157,7 @@ class HookLoader {
 
         await async.eachOfSeries(this.Hooks, async Hook => {
             await Hook.init()
-            console.log(Hook.name)
+            info(Hook.name)
         })
     }
 }

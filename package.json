@@ -1,6 +1,6 @@
 {
   "name": "pluto-express",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "",
   "main": "pluto-express.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "chalk": "^4.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",

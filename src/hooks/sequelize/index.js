@@ -3,14 +3,14 @@ const mysql2 = require('mysql2')
 module.exports = {
     modules: require('./models'),
     configs: {
-        models: {
+        modelConnections: {
             Mode: 'master',
             App: 'master',
             Company: 'master',
             Employee: 'master',
             Permission: 'master',
         },
-        databases: {
+        connections: {
             master: {
                 user: 'root',
                 password: 'root',

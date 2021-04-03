@@ -28,8 +28,6 @@
  * */
 
 module.exports = {
-    cors: require('./cors'),
-    session: require('./session'),
     requests: require('./requests'),
     policies: require('./policies'),
     routes: require('./routes'),
