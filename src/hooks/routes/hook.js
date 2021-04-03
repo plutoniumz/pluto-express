@@ -1,4 +1,6 @@
+const path = require('path')
 const Hook = require('../Hook')
+const express = require('express')
 
 class RouteHook extends Hook {
     init() {
@@ -12,6 +14,8 @@ class RouteHook extends Hook {
 
             app[httpMethod](url, module[methodName])
         })
+
+        app.use('/files', express.static('files'))
     }
 }
 
