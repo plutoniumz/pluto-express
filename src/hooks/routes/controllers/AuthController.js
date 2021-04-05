@@ -1,3 +1,6 @@
+const mime = require('mime-types')
+const AVATAR_FILES_PATH = 'files/avatars'
+
 module.exports = {
     login: async function (req, res) {
         if (!req.body.username || !req.body.password)
@@ -48,6 +51,42 @@ module.exports = {
         )
 
         return res.sendMessage('Đổi mật khẩu thành công')
+    },
+
+    changeAvatar: async function (req, res) {
+        const { mimetype, data } = req.files.avatar
+        const fileName = `avatar${Date.now()}.${mime.extension(mimetype)}`
+        const employee = await Employee.findOne({
+            where: {
+                id: session.getEmployee(req).id,
+            },
+        })
+
+        const oldAvatarPath = `${process.cwd()}/${employee.avatar}`
+        if (fs.existsSync(oldAvatarPath)) {
+            fs.unlinkSync(oldAvatarPath)
+        }
+
+        await Employee.update(
+            {
+                avatar: `${AVATAR_FILES_PATH}/${fileName}`,
+            },
+            {
+                where: {
+                    id: session.getEmployee(req).id,
+                },
+            },
+        )
+
+        fs.writeFileSync(
+            `${process.cwd()}/${AVATAR_FILES_PATH}/${fileName}`,
+            data,
+        )
+
+        res.ok({
+            message: 'Change avatar succeed',
+            avatar: `${AVATAR_FILES_PATH}/${fileName}`,
+        })
     },
 
     getPermission: async function (req, res) {

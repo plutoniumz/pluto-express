@@ -6,6 +6,7 @@ module.exports = {
         'GET /permission': 'AuthController.getPermission',
         'GET /getAllPermissions': 'AuthController.getAllPermissions',
         'POST /changePassword': 'AuthController.changePassword',
+        'POST /changeAvatar': 'AuthController.changeAvatar',
         'DELETE /logout': 'AuthController.logout',
     },
 }
