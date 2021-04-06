@@ -34,7 +34,8 @@ module.exports = {
                     mkdir ${application_name}
                     cd ${application_name}
                     npm init -y > /dev/null
-                    npm install pluto-express > /dev/null
+                    npm install --save pluto-express > /dev/null
+                    npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier > /dev/null
                     cp -rf ${path.join(__dirname, '../example/')} ./
                 `,
                 { async: true, silent: true },

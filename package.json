@@ -1,6 +1,6 @@
 {
   "name": "pluto-express",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "",
   "main": "pluto-express.js",
   "scripts": {
@@ -31,7 +31,9 @@
     "sequelize": "^6.5.0",
     "shelljs": "^0.8.4",
     "sqlite3": "^5.0.2",
-    "yargs": "^16.2.0",
+    "yargs": "^16.2.0"
+  },
+  "devDependencies": {
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
