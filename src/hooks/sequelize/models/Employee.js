@@ -3,6 +3,10 @@ const { DataTypes } = Sequelize
 
 module.exports = {
     attributes: {
+        name: {
+            type: DataTypes.STRING,
+            required: true,
+        },
         username: {
             type: DataTypes.STRING,
             required: true,
@@ -13,6 +17,10 @@ module.exports = {
             required: true,
             protect: true,
         },
+        avatar: {
+            type: DataTypes.STRING,
+            required: true,
+        },
         is_admin: {
             type: 'boolean',
             defaultValue: false,
@@ -21,8 +29,6 @@ module.exports = {
             type: 'boolean',
             defaultValue: true,
         },
-        ...(require('../../../../hooks/sequelize/models/Employee').attributes ||
-            {}),
     },
 
     options: {
@@ -162,7 +168,5 @@ module.exports = {
                 return allCompanies
             },
         },
-        ...(require('../../../../hooks/sequelize/models/Employee').options ||
-            {}),
     },
 }
