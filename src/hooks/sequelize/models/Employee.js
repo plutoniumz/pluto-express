@@ -6,11 +6,12 @@ module.exports = {
         name: {
             type: DataTypes.STRING,
             required: true,
+            unique: true,
         },
         username: {
             type: DataTypes.STRING,
             required: true,
-            unique: 'username',
+            unique: true,
         },
         password: {
             type: DataTypes.STRING,
