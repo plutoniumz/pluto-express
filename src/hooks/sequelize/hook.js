@@ -83,10 +83,17 @@ class SequelizeHook extends Hook {
             relations.forEach(relation => {
                 const modelMethod = relation.split(' ')[0]
                 const associateModelName = relation.split(' ')[1]
+                const foreignKeyName = relation.split(' ')[2]
                 const model = global[modelName]
                 const associateModel = global[associateModelName]
 
-                model[modelMethod](associateModel)
+                if (foreignKeyName) {
+                    model[modelMethod](associateModel, {
+                        foreignKey: foreignKeyName,
+                    })
+                } else {
+                    model[modelMethod](associateModel)
+                }
             })
         })
     }
