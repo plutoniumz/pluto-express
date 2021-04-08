@@ -78,28 +78,6 @@ class SequelizeHook extends Hook {
         )
     }
 
-    defineAssociations(associations) {
-        Object.entries(associations).forEach(([modelName, relations]) => {
-            relations.forEach(relation => {
-                const modelMethod = relation.split(' ')[0]
-                const associateModelName = relation.split(' ')[1]
-                const foreignKeyName = relation.split(' ')[2]
-                const targetKeyName = relation.split(' ')[3]
-                const model = global[modelName]
-                const associateModel = global[associateModelName]
-
-                if (foreignKeyName) {
-                    model[modelMethod](associateModel, {
-                        foreignKey: foreignKeyName,
-                        targetKey: targetKeyName,
-                    })
-                } else {
-                    model[modelMethod](associateModel)
-                }
-            })
-        })
-    }
-
     async migrateSchemas(sequelizeConnections) {
         await async.eachOf(sequelizeConnections, async connection => {
             await connection.sync({
@@ -124,7 +102,6 @@ class SequelizeHook extends Hook {
     async init() {
         const {
             connections,
-            associations,
             modelConnections,
             defaultAttributes,
         } = this.configs
@@ -141,7 +118,9 @@ class SequelizeHook extends Hook {
             models,
         )
 
-        this.defineAssociations(associations)
+        this.configs.defaultAssociations()
+
+        this.configs.associations()
 
         await this.migrateSchemas(sequelizeConnections)
 

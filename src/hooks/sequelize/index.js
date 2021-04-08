@@ -43,17 +43,16 @@ module.exports = {
             createdAt: Sequelize.DATE,
             updatedAt: Sequelize.DATE,
         },
-        associations: {
-            App: ['hasMany Permission'],
-            Company: ['hasMany Permission'],
-            Employee: ['hasMany Permission'],
-            Mode: ['hasMany Permission'],
-            Permission: [
-                'belongsTo App',
-                'belongsTo Employee',
-                'belongsTo Company',
-                'belongsTo Mode',
-            ],
+        defaultAssociations: () => {
+            App.hasMany(Permission)
+            Company.hasMany(Permission)
+            Employee.hasMany(Permission)
+            Mode.hasMany(Permission)
+            Permission.belongsTo(App)
+            Permission.belongsTo(Employee)
+            Permission.belongsTo(Company)
+            Permission.belongsTo(Mode)
         },
+        associations: () => {},
     },
 }
