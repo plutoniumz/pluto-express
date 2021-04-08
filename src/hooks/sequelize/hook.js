@@ -82,6 +82,7 @@ class SequelizeHook extends Hook {
         await async.eachOf(sequelizeConnections, async connection => {
             await connection.sync({
                 force: connection.options.force,
+                alter: connection.options.alter,
             })
         })
     }
