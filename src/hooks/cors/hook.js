@@ -5,7 +5,20 @@ class CorsHook extends Hook {
         const { allow_domains, allow_key } = this.configs
 
         const getOptions = function (req, callback) {
-            if (allow_key && req.header(allow_key) === 'allow') {
+            if (
+                req.method === 'OPTIONS' &&
+                req.get('access-control-request-headers') &&
+                req.get('access-control-request-headers').includes(allow_key)
+            ) {
+                callback(null, {
+                    origin: true,
+                    credentials: true,
+                    optionsSuccessStatus: 200,
+                })
+            } else if (
+                req.method !== 'OPTIONS' &&
+                req.get('access-control-request-headers') === 'allow'
+            ) {
                 callback(null, {
                     origin: true,
                     credentials: true,
