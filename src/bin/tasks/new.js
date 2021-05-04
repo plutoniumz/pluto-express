@@ -15,45 +15,39 @@ module.exports = {
         })
     },
     handler: ({ application_name }) => {
-        if (application_name) {
-            if (fs.existsSync(`./${application_name}`)) {
-                console.log(
-                    chalk.bold.red(
-                        `The "${application_name}" directory is existed`,
-                    ),
-                )
-                return
-            }
-
-            const spinner = ora(
-                `Application "${application_name}" is creating...`,
-            ).start()
-
-            shell.exec(
-                `
-                    mkdir ${application_name}
-                    cd ${application_name}
-                    npm init -y > /dev/null
-                    npm install --save pluto-express > /dev/null
-                    npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier > /dev/null
-                    cp -rf ${path.join(__dirname, '../example/')} ./
-                `,
-                { async: true, silent: true },
-                function () {
-                    spinner.succeed(
-                        `Application "${application_name}" is created !!!`,
-                    )
-                    console.log(
-                        chalk.bold.cyan(
-                            'For starting the application please follow: ',
-                        ),
-                    )
-                    console.log(`cd ${application_name}`)
-                    console.log('node app.js')
-                },
-            )
-        } else {
+        if (!application_name) {
             console.log(chalk.bold.red('Please input application name !!!'))
+            return
         }
+
+        if (fs.existsSync(`./${application_name}`)) {
+            console.log(
+                chalk.bold.red(
+                    `The "${application_name}" directory is existed`,
+                ),
+            )
+            return
+        }
+
+        const spinner = ora(
+            `Application "${application_name}" is creating...`,
+        ).start()
+
+        shell.mkdir(application_name)
+        shell.cd(application_name)
+        shell.exec('npm init -y')
+        shell.exec('npm install --save pluto-express')
+        shell.exec(
+            'npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier',
+        )
+        shell.cp('-R', `${path.join(__dirname, '../example/*')}`, './')
+
+        spinner.succeed(`Application "${application_name}" is created !!!`)
+
+        console.log(
+            chalk.bold.cyan('For starting the application please follow: '),
+        )
+        console.log(`cd ${application_name}`)
+        console.log('node app.js')
     },
 }
