@@ -35,10 +35,11 @@ module.exports = {
 
         shell.mkdir(application_name)
         shell.cd(application_name)
-        shell.exec('npm init -y')
-        shell.exec('npm install --save pluto-express')
+        shell.exec('npm init -y', { silent: true })
+        shell.exec('npm install --save pluto-express', { silent: true })
         shell.exec(
             'npm install --save-dev eslint prettier eslint-plugin-prettier eslint-config-prettier',
+            { silent: true },
         )
         shell.cp('-R', `${path.join(__dirname, '../example/*')}`, './')
 
