@@ -6,6 +6,7 @@ const DEFAULT_HOOKS = [
     'cors',
     'helmet',
     'session',
+    'body-parser',
     'file-upload',
     'responses',
     'policies',
