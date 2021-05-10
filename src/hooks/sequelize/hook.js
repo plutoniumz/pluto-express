@@ -119,8 +119,6 @@ class SequelizeHook extends Hook {
             models,
         )
 
-        this.configs.defaultAssociations()
-
         this.configs.associations()
 
         await this.migrateSchemas(sequelizeConnections)

@@ -6,13 +6,15 @@ class PoliciesHook extends Hook {
         this.routes = this.settings['routes'].configs
         this.policies = this.configs
 
-        this.rules = Object.entries(this.getRules())
+        if (!_.isEmpty(this.policies)) {
+            this.rules = Object.entries(this.getRules())
 
-        this.rules.forEach(([address, modules]) => {
-            modules.forEach(module => {
-                this.register(address, module)
+            this.rules.forEach(([address, modules]) => {
+                modules.forEach(module => {
+                    this.register(address, module)
+                })
             })
-        })
+        }
     }
 
     getRules() {
