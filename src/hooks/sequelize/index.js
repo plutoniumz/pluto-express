@@ -1,3 +1,5 @@
+const sqlite3 = require('sqlite3')
+
 module.exports = {
     configs: {
         modelConnections: {},
@@ -5,6 +7,7 @@ module.exports = {
             master: {
                 database: 'pluto_master',
                 dialect: 'sqlite',
+                dialectModule: sqlite3,
                 storage: 'pluto_master.sqlite',
                 force: true,
                 logging: false,
@@ -12,6 +15,7 @@ module.exports = {
             slave: {
                 database: 'pluto_slave',
                 dialect: 'sqlite',
+                dialectModule: sqlite3,
                 storage: 'pluto_slave.sqlite',
                 force: true,
                 logging: false,
