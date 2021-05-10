@@ -36,5 +36,8 @@ module.exports = {
             },
         ],
     },
+    externals: {
+        sqlite3: 'commonjs sqlite3',
+    },
     ignoreWarnings: [/critical dependency:/i],
 }
