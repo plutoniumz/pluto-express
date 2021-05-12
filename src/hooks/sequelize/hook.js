@@ -1,32 +1,6 @@
 const Hook = require('../Hook')
-const mysql = require('mysql2/promise')
 
 class SequelizeHook extends Hook {
-    async createDatabases(connections) {
-        await async.eachOf(connections, async configs => {
-            /*const { user, password, host, port, database } = configs
-            const queryStr = `CREATE DATABASE IF NOT EXISTS \`${database}\`;`
-
-            try {
-                const connection = await mysql.createConnection({
-                    host: host,
-                    port: port,
-                    user: user,
-                    password: password,
-                })
-
-                await connection.query(queryStr)
-            } catch (ex) {
-                if (ex.code === 'ECONNREFUSED') {
-                    error(
-                        `Can not connect to ${database}:\n host: ${host}\n port: ${port}\n user: ${user}\n password: ${password}`,
-                    )
-                    process.exit()
-                }
-            }*/
-        })
-    }
-
     getSequelizeConnections(connections) {
         const sequelizeConnections = {}
 
@@ -107,8 +81,6 @@ class SequelizeHook extends Hook {
             defaultAttributes,
         } = this.configs
         const models = this.modules
-
-        await this.createDatabases(connections)
 
         const sequelizeConnections = this.getSequelizeConnections(connections)
 
