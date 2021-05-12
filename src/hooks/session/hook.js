@@ -1,22 +1,33 @@
 const Hook = require('../Hook')
-const Session = require('./Session')
-const expressSession = require('express-session')
-const MySQLStore = require('express-mysql-session')(expressSession)
+const session = require('express-session')
+const Store = require('connect-session-sequelize')(session.Store)
 
 class SessionHook extends Hook {
     init() {
-        const { connection, secret, expiration } = this.configs
-        const database = this.settings['sequelize'].configs.connections[
-            connection
-        ]
-        const store = new MySQLStore(database)
+        const {
+            connection,
+            secret,
+            expiration,
+            checkExpirationInterval,
+        } = this.configs
 
-        global.session = new Session(store)
+        const { force, alter, user, password, database, ...rest } = connection
 
-        session.clearAllSessions()
+        const sessionConnection = new Sequelize(database, user, password, rest)
+
+        const store = new Store({
+            db: sessionConnection,
+            checkExpirationInterval: checkExpirationInterval,
+            expiration: expiration,
+        })
+
+        store.sync({
+            force: force,
+            alter: alter,
+        })
 
         app.use(
-            expressSession({
+            session({
                 store: store,
                 resave: false,
                 saveUninitialized: false,

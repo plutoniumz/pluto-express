@@ -4,7 +4,7 @@ const mysql = require('mysql2/promise')
 class SequelizeHook extends Hook {
     async createDatabases(connections) {
         await async.eachOf(connections, async configs => {
-            const { user, password, host, port, database } = configs
+            /*const { user, password, host, port, database } = configs
             const queryStr = `CREATE DATABASE IF NOT EXISTS \`${database}\`;`
 
             try {
@@ -23,7 +23,7 @@ class SequelizeHook extends Hook {
                     )
                     process.exit()
                 }
-            }
+            }*/
         })
     }
 
